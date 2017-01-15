@@ -1,0 +1,9 @@
+.numeric-text {
+    text-align: right !important;
+}
+
+.numeric-text input {
+    text-align: right !important;
+    margin-left : -4px;
+}
+
