@@ -4,6 +4,7 @@ import { AgGridReact } from 'ag-grid-react';
 import RefData from './RefData';
 import {reactSelectSampleData} from './utils';
 import $ from 'jquery';
+
 // import jQueryEditableSelect from 'jquery-editable-select';
 // import DropdownInput from 'react-dropdown-input';
 import { getStates, matchStateToTerm, sortStates, styles } from './reactAutoCompleteUtils';
@@ -27,8 +28,8 @@ class SelectCellEditor extends React.Component {
     'Adelaide', 'Perth', 'Hobart'];
 
         return (
-            <div>
-            
+            <div id="selectCellEditor">
+          
             <Autocomplete
                 ref="selector"
                 value={this.state.value}
@@ -48,33 +49,6 @@ class SelectCellEditor extends React.Component {
                 )}
             />
                 
-
-            {/*
-            <DropdownInput 
-                options={searchNames}
-                defaultValue={this.props.initialValue}
-                menuClassName='dropdown-input'
-                onSelect={this.handleSelectName}
-                placeholder='Search...'
-            />
-            
-            <div>
-                <input id="editable-select" />
-            </div>
-
-            <select id="editable-select"  ref="selector">
-                <option>Alfa Romeo</option>
-                <option>Audi</option>
-                <option>BMW</option>
-                <option>Citroen</option>
-            </select>
-            
-
-             <Select name="form-field-name" value="one" ref="selector" options={options} 
-                 onChange={logChange}   />
-             */
-            }
-
             </div>
         );
     }
@@ -111,12 +85,20 @@ class SelectCellEditor extends React.Component {
     }
 
     afterGuiAttached() {
-        console.log("Inside afterGuiAttached");
-
         // get ref from React component
         var eInput = this.refs.selector;
-        //eInput.focus();
-        //eInput.select();
+        eInput.refs.input.focus()
+        var self = this;
+		eInput.refs.input.addEventListener('keydown', function (event) {
+			let key = event.which || event.keyCode;
+			if (key == 40 || key == 38 || key == 13) {
+				event.stopPropagation();
+				event.preventDefault();
+				eInput.handleKeyDown(event);
+			}
+        });
+
+        eInput.refs.input.select();
     }
 
 }

@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { AgGridReact } from 'ag-grid-react';
 import RefData from './RefData';
 import SelectCellEditor from './SelectCellEditor.jsx';
+import _ from 'underscore';
 
 //import  './styles.css';
 import 'react-select/dist/react-select.css';
@@ -47,9 +48,9 @@ class App extends React.Component {
 						icons={this.state.icons}
 						columnDefs={this.state.columnDefs}
 						rowData={this.state.rowData}
-						//onKeyDown={this.onKeyDown.bind(this)}
+						onKeyDown={this.onKeyDown.bind(this)}
 						enableColResize="true"
-						rowHeight="22"
+						rowHeight="24"
 						debug="true"
 					/>
 				</div>
@@ -92,13 +93,6 @@ class App extends React.Component {
 		});
 	}
 
-	onKeyDown(event) {
-        let key = event.which || event.keyCode;
-        if (key == 40 ) {
-            event.stopPropagation();
-        }
-    }
-
 	createColDefs() {
 		var columnDefs = [
 			{
@@ -121,8 +115,11 @@ class App extends React.Component {
 				headerName: 'Address', width: 160,  field: 'address'
 			},
 			{
-				headerName: 'Selector', width: 185,  field: 'language', editable: true,
-					cellEditorFramework : SelectCellEditor
+				headerName: 'Selector', width: 200,  field: 'language', editable: true,
+					cellEditorFramework : SelectCellEditor,
+					cellEditorParams : {
+						onKeyDown : this.onKeyDown
+					}
 			}
 		];
 		return columnDefs;
@@ -157,6 +154,10 @@ class App extends React.Component {
 
 		return rowData;
 	}
+
+	onKeyDown(event) {
+        
+    }
 
 }
 
